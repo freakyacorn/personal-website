@@ -193,23 +193,6 @@
             width: 300px;
             height: 300px;
             position: relative;
-            animation: rotate 20s linear infinite;
-        }
-
-        .molecule-node {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
-        }
-
-        .molecule-bond {
-            position: absolute;
-            height: 2px;
-            background: rgba(255,255,255,0.6);
-            transform-origin: left center;
         }
 
         /* Sections */
@@ -482,15 +465,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
             }
         }
 
@@ -929,65 +903,6 @@
                 }
             });
         });
-
-        // Create animated molecule visualization
-        function createMolecule() {
-            const molecule = document.getElementById('molecule');
-            if (!molecule) return;
-            
-            // Create nodes
-            const positions = [
-                {x: 50, y: 50},
-                {x: 150, y: 30},
-                {x: 250, y: 50},
-                {x: 100, y: 150},
-                {x: 200, y: 150},
-                {x: 150, y: 250}
-            ];
-            
-            // Create bonds
-            const bonds = [
-                {from: 0, to: 1},
-                {from: 1, to: 2},
-                {from: 0, to: 3},
-                {from: 1, to: 4},
-                {from: 3, to: 5},
-                {from: 4, to: 5}
-            ];
-            
-            // Add bonds
-            bonds.forEach(bond => {
-                const bondEl = document.createElement('div');
-                bondEl.className = 'molecule-bond';
-                const x1 = positions[bond.from].x;
-                const y1 = positions[bond.from].y;
-                const x2 = positions[bond.to].x;
-                const y2 = positions[bond.to].y;
-                
-                const length = Math.sqrt((x2-x1)**2 + (y2-y1)**2);
-                const angle = Math.atan2(y2-y1, x2-x1) * 180 / Math.PI;
-                
-                bondEl.style.width = length + 'px';
-                bondEl.style.left = x1 + 'px';
-                bondEl.style.top = y1 + 'px';
-                bondEl.style.transform = `rotate(${angle}deg)`;
-                
-                molecule.appendChild(bondEl);
-            });
-            
-            // Add nodes
-            positions.forEach((pos, i) => {
-                const node = document.createElement('div');
-                node.className = 'molecule-node';
-                node.style.left = (pos.x - 15) + 'px';
-                node.style.top = (pos.y - 15) + 'px';
-                node.style.animationDelay = `${i * 0.1}s`;
-                molecule.appendChild(node);
-            });
-        }
-
-        // Initialize molecule on page load
-        window.addEventListener('load', createMolecule);
 
         // Add scroll animations
         const observerOptions = {
